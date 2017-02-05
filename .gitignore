@@ -1,0 +1,5 @@
+# node_modules is never commited
+node_modules/
+
+# Ignore the generated output file
+www/bundle.js
