@@ -11,10 +11,13 @@ class App extends Component {
   };
 
   onRoll = (number) => {
-    // Do not do it this way just for fun
-    this.state.players[this.state.currentPlayer].number += number;
+    // Do not do it this way; just for fun
+    const current = Object.assign({}, this.state.players[this.state.currentPlayer]);
+    if (number < 100 - current.number) 
+      current.number += number;
+
     this.setState({
-      players: this.state.players,
+      players: this.state.players.map(player => player.id === current.id ? current : player),
       currentPlayer: (this.state.currentPlayer + 1) % 2,
     });
   };
@@ -24,8 +27,8 @@ class App extends Component {
 
     return (
       <div>
-        <Board size={10} players={players}/>
-        <Dice currentPlayer={currentPlayer} onRoll={this.onRoll} />
+        <Board size={10} players={players} currentPlayer = {currentPlayer}/>
+        <Dice currentPlayer={players[(currentPlayer+1)%2]} onRoll={this.onRoll} />
       </div>
     );
   }
