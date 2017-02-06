@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Players from './Players';
 
 const boardMap = {
   3:  {type: 'ladder', goto: 21},
@@ -20,7 +21,9 @@ const boardMap = {
 class Board extends Component {
 
   renderPlayer = (player, idx) => {
-    return <div key={idx} style={{background: player.color, width: 15, height: 15}} />;
+  //   return <div key={idx} style={{background: player.color, width: 15, height: 15}} />;
+      return (<Players player={player} key = {idx} index= {idx}/>);
+
   }
 
   generateRow(columns, row) {
@@ -31,6 +34,7 @@ class Board extends Component {
     const rows = columns;
     const cells = [];
     const rowNumber = (rows - row - 1);
+    const cellwidth = document.documentElement.clientWidth/12;
     
     for (let i = 0; i < columns; ++i) {
       const cellNumber = rowNumber * columns + ((rowNumber % 2 === 0) ?  i + 1 : (columns - i));
@@ -39,12 +43,13 @@ class Board extends Component {
       const cellPlayers = players.filter(player => player.number === cellNumber);
 
       cells.push(
-        <div key={i} style={{display: 'inline-block', width: 70, height: 70, border: '1px solid black', textAlign: 'center'}}>
+        <div key={i} style={{display: 'inline-block', width: cellwidth, height: 70, border: '1px solid black', textAlign: 'center'}}>
           {cellNumber}
           {cellPlayers.map(this.renderPlayer)}
         </div>
         
       );
+      
 
     }
     return cells;

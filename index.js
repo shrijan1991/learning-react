@@ -13,8 +13,10 @@ class App extends Component {
   onRoll = (number) => {
     // Do not do it this way; just for fun
     const current = Object.assign({}, this.state.players[this.state.currentPlayer]);
-    if (number < 100 - current.number) 
+    if (number <= 100 - current.number) {
       current.number += number;
+      
+    }
 
     this.setState({
       players: this.state.players.map(player => player.id === current.id ? current : player),
