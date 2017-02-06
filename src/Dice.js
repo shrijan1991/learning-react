@@ -23,7 +23,7 @@ class Dice extends Component {
         textAlign: 'center',
         padding: 10,
         fontSize: 18,
-      }} onClick={this.roll}>{number === null ? 'Roll Dice' : `${currentPlayer.color.toUpperCase()} rolled ${number}`}</div>
+      }} onClick={this.roll}>{number === null ? 'Roll Dice' : `Rolled ${number}`}</div>
     );
   }
 }
