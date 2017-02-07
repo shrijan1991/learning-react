@@ -22,7 +22,6 @@ class Player extends Component {
       left: coordinate.x,
       top: coordinate.y,
     };
-
     if (chooseGoti && chooseGoti.length > 0 && chooseGoti.indexOf(idx) > -1) {
       return <button key={idx} className="goti" style={style} onClick={() => onGotiChosen(idx)} />;
     }
@@ -32,6 +31,8 @@ class Player extends Component {
 
   render() {
     const { id, gotis } = this.props;
+    //console.log(gotis);
+
 
     return (
       <div style={{ position: 'absolute', left: 0, top: 0 }}>

@@ -1,16 +1,15 @@
 class PlayerState {
   constructor() {
-    this.positions = [-1, -1, -1, -1];
+    this.positions = [52, -1, -1, -1];
   }
 
   needsOne() {
-    return this.positions.every(pos => pos === -1);
+    return this.positions.filter(filled => filled != 56).every(pos => pos === -1);
   }
 
   hasChoice(number) {
-    const lim = 57 - number;
-    const outs = this.positions.map((pos, idx) => (pos === -1 ? null : idx))
-                    .filter(n => ((n !== null) && (n < this.lim)));
+    const outs = this.positions.map((pos, idx) => ((pos === -1 || pos === 56 || (pos + number) > 56) ? null : idx))
+                  .filter(n => n !== null);
 
     if (outs.length < 4 && number === 1) {
       outs.push(this.positions.findIndex(pos => pos === -1));

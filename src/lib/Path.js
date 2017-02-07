@@ -31,7 +31,7 @@ function generateEnd(initialPosition, direction) {
   path.push(pos.slice());
   pos[0] += direction[2];
   pos[1] += direction[3];
-  for (let i = 0; i < 6; i += 1) {
+  for (let i = 0; i < 7; i += 1) {
     path.push(pos.slice());
     pos[0] -= direction[0];
     pos[1] -= direction[1];

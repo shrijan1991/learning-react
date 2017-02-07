@@ -38,7 +38,6 @@ class App extends Component {
     }
 
     const choices = playerState.hasChoice(number);
-
     if (choices.length === 1) {
       playerState.update(number, choices[0]);
       this.setState({
@@ -57,12 +56,19 @@ class App extends Component {
     // Give user a choice to select one of the blinking dots
     this.lastNumber = number;
     this.resetDice = resetDice;
-
-
-    if (choices.length !== 0) {
+    if (choices.length > 0) {
       this.setState({
         chooseGoti: choices,
       });
+    }
+    else
+    {
+      setTimeout(() => {
+        this.setState({
+          currentPlayer: (currentPlayer + 1) % players.length,
+        });
+        resetDice();
+      }, PLAYER_TIMEOUT);
     }
   };
 
