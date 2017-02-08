@@ -18,10 +18,12 @@ const players = [
 
 class App extends Component {
   state = {
-    playersState: players.map(() => new PlayerState()),
+    playersState: players.map((p) => new PlayerState(p.id)),
     currentPlayer: 0,
     chooseGoti: null,
   };
+
+
 
   onRoll = (number, resetDice) => {
     const { currentPlayer, playersState } = this.state;
@@ -36,10 +38,10 @@ class App extends Component {
       }, PLAYER_TIMEOUT);
       return;
     }
-
     const choices = playerState.hasChoice(number);
+
     if (choices.length === 1) {
-      playerState.update(number, choices[0]);
+      playerState.update(number, choices[0], playersState);
       this.setState({
         playersState: this.state.playersState,
       });
@@ -72,6 +74,8 @@ class App extends Component {
     }
   };
 
+
+
   onGotiChosen = (gotiNumber) => {
     const { currentPlayer, playersState } = this.state;
     this.setState({
@@ -79,7 +83,9 @@ class App extends Component {
     });
 
     const playerState = playersState[currentPlayer];
-    playerState.update(this.lastNumber, gotiNumber);
+    playerState.update(this.lastNumber, gotiNumber, playersState);
+
+
     setTimeout(() => {
       if (this.lastNumber !== 1 && this.lastNumber !== 6) {
         this.setState({
@@ -89,6 +95,8 @@ class App extends Component {
       this.resetDice();
     });
   }
+
+
 
   render() {
     const { playersState, currentPlayer, chooseGoti } = this.state;

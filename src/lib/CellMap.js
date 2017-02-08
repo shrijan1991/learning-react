@@ -12,24 +12,7 @@ const homes = {
   green: [6, 7],
 };
 
-const safeDistances = [8, 13, 21, 26, 34, 39, 47, 51, 52, 53, 54, 55, 56];
+const safeDistances = [-1, 0, 8, 13, 21, 26, 34, 39, 47, 51, 52, 53, 54, 55, 56];
 
-const dhusDistance = {
-  red: {
-    blue: 13,
-    yellow: 26,
-    green: 39,
-  },
-  blue: {
-    yellow: 13,
-    green: 26,
-    red: 39,
-  },
-  green: {
-    red: 13,
-    blue: 26,
-    yellow: 39,
-  },
-};
 
-export { bases, homes, safeDistances, dhusDistance };
+export { bases, homes, safeDistances };

@@ -12,11 +12,10 @@ function generateStart(initialPosition, direction) {
   const pos = initialPosition.slice();
 
   for (let i = 0; i < 4; i += 1) {
-    path.push(pos.slice());
     pos[0] += direction[0];
     pos[1] += direction[1];
+    path.push(pos.slice());
   }
-
   return path;
 }
 

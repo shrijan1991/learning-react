@@ -15,7 +15,7 @@ class Dice extends Component {
       return;
     }
 
-    const number = Math.floor(Math.random() * 10) + 1;
+    const number = Math.floor(Math.random() * 6) + 1;
     this.setState({
       number,
     });
