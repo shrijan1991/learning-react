@@ -1,7 +1,7 @@
-import { bases, homes } from './CellMap';
+import { bases } from './CellMap';
 
-const CELL_WIDTH = 62;
-const CELL_HEIGHT = 62;
+const CELL_WIDTH = 62.25;
+const CELL_HEIGHT = 62.25;
 
 function transpose(src) {
   return src.map(point => [14 - point[1], point[0]]);

@@ -23,7 +23,7 @@ class Player extends Component {
       top: coordinate.y,
     };
     if (chooseGoti && chooseGoti.length > 0 && chooseGoti.indexOf(idx) > -1) {
-      return <button key={idx} className="goti" style={style} onClick={() => onGotiChosen(idx)}  />;
+      return <button key={idx} className="goti" style={style} onClick={() => onGotiChosen(idx)} />;
     }
 
     return <div key={idx} className="goti" style={style} />;
