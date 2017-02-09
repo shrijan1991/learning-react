@@ -14,5 +14,4 @@ const homes = {
 
 const safeDistances = [-1, 0, 8, 13, 21, 26, 34, 39, 47, 51, 52, 53, 54, 55, 56];
 
-
 export { bases, homes, safeDistances };

@@ -1,7 +1,7 @@
 import { bases } from './CellMap';
 
-const CELL_WIDTH = 62.25;
-const CELL_HEIGHT = 62.25;
+const CELL_WIDTH = 62;
+const CELL_HEIGHT = 62;
 
 function transpose(src) {
   return src.map(point => [14 - point[1], point[0]]);
@@ -79,7 +79,6 @@ const Path = {
     if (position === -1) {
       p = bases[playerId][gotiNumber];
     }
-
     return {
       x: p[0] * CELL_WIDTH,
       y: p[1] * CELL_HEIGHT,

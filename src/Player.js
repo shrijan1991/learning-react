@@ -17,16 +17,24 @@ class Player extends Component {
   renderGoti = (coordinate, idx) => {
     const { color, chooseGoti, onGotiChosen } = this.props;
 
-    const style = {
+    const defaultstyle = {
       backgroundColor: color,
       left: coordinate.x,
       top: coordinate.y,
     };
+
+    const selected = {
+      backgroundColor: color,
+      left: coordinate.x,
+      top: coordinate.y,
+      zIndex: 1,
+    };
+
     if (chooseGoti && chooseGoti.length > 0 && chooseGoti.indexOf(idx) > -1) {
-      return <button key={idx} className="goti" style={style} onClick={() => onGotiChosen(idx)} />;
+      return <button key={idx} className="goti" style={selected} onClick={() => onGotiChosen(idx)} />;
     }
 
-    return <div key={idx} className="goti" style={style} />;
+    return <div key={idx} className="goti" style={defaultstyle} />;
   }
 
   render() {

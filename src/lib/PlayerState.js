@@ -27,6 +27,7 @@ class PlayerState {
     const playersState = allPlayers;
     const opponents = playersState.filter(p => p !== this);
 
+
     if (number === -1) {
       this.positions[goti] = -1;
       return;
