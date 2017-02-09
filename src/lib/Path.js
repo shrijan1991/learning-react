@@ -75,20 +75,20 @@ paths.green = transpose(paths.yellow);
 
 const Path = {
   getCoordinate: (playerId, position, gotiNumber) => {
+    var p = paths[playerId][position];
     if (position === -1) {
-      const p = bases[playerId][gotiNumber];
-      return {
-        x: p[0] * CELL_WIDTH,
-        y: p[1] * CELL_HEIGHT,
-      };
+      p = bases[playerId][gotiNumber];
     }
 
-    const pos = paths[playerId][position];
     return {
-      x: pos[0] * CELL_WIDTH,
-      y: pos[1] * CELL_HEIGHT,
+      x: p[0] * CELL_WIDTH,
+      y: p[1] * CELL_HEIGHT,
+      equals(checkCoordinate) {
+        return (this.x === checkCoordinate.x && this.y === checkCoordinate.y);
+      },
     };
   },
+
 };
 
 export default Path;

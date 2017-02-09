@@ -7,7 +7,7 @@ import Board from './src/Board';
 import Dice from './src/Dice';
 
 
-const PLAYER_TIMEOUT = 200;
+const PLAYER_TIMEOUT = 400;
 
 const players = [
   { id: 'red', color: 'red' },
@@ -36,6 +36,7 @@ class App extends Component {
       }, PLAYER_TIMEOUT);
       return;
     }
+
     const choices = playerState.hasChoice(number);
 
     if (choices.length === 1) {
@@ -44,9 +45,11 @@ class App extends Component {
         playersState: this.state.playersState,
       });
       setTimeout(() => {
-        this.setState({
-          currentPlayer: (currentPlayer + 1) % players.length,
-        });
+        if (number !== 1 && number !== 6) {
+          this.setState({
+            currentPlayer: (currentPlayer + 1) % players.length,
+          });
+        }
         resetDice();
       }, PLAYER_TIMEOUT);
 

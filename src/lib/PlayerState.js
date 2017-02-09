@@ -33,20 +33,19 @@ class PlayerState {
     }
     this.positions[goti] = ((this.positions[goti] + number) < 57) ?
      (this.positions[goti] + number) : this.positions[goti];
+
     const newposition = this.positions[goti];
 
     if (this.positions.filter(n => n === 56).length === 4) {
       alert(this.id.toUpperCase() + ' is Victorious.');
     }
-    // dhoos logic
-    const currentCoordinate = Path.getCoordinate(this.id, newposition, goti);
 
+    const currentCoordinate = Path.getCoordinate(this.id, newposition, goti);
     if (!safeDistances.includes(newposition)) {
       for (let i = 0; i < 3; i += 1) {
         opponents[i].getPositions()
         .map((num, idx) =>
-        (Path.getCoordinate(opponents[i].id, num, idx).x === currentCoordinate.x &&
-        Path.getCoordinate(opponents[i].id, num, idx).y === currentCoordinate.y) ? idx : null)
+        (Path.getCoordinate(opponents[i].id, num, idx).equals(currentCoordinate)) ? idx : null)
         .filter(index => index !== null)
         .forEach(deported => opponents[i].update(-1, deported, playersState));
       }
