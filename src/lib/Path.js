@@ -75,7 +75,7 @@ paths.green = transpose(paths.yellow);
 
 const Path = {
   getCoordinate: (playerId, position, gotiNumber) => {
-    var p = paths[playerId][position];
+    let p = paths[playerId][position];
     if (position === -1) {
       p = bases[playerId][gotiNumber];
     }

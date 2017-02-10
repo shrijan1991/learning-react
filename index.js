@@ -98,10 +98,11 @@ class App extends Component {
 
     const currentPlayerId = players[currentPlayer].id;
 
+
     return (
       <div>
         <Board>
-          { players.map((player, idx) =>
+          {players.map((player, idx) =>
             <Player
               onGotiChosen={this.onGotiChosen}
               chooseGoti={idx === currentPlayer ? chooseGoti : null}
@@ -111,7 +112,7 @@ class App extends Component {
               gotis={playersState[idx].getPositions()}
             />)
           }
-        </Board>
+          </Board>
         <Dice caption={currentPlayerId} onRoll={this.onRoll} />
       </div>
     );
