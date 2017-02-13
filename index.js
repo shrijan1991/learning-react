@@ -5,14 +5,14 @@ import Board from './src/Board';
 import Cells from './src/Cells';
 
 class App extends Component {
-  render  () {
+  render() {
     return (
-        <div>
-          <Board />
-          <Cells />
-        </div>
+      <div>
+        <Board />
+        <Cells />
+      </div>
     );
   }
 }
 
-render(<App/>, document.getElementById('rootFile'));
+render(<App />, document.getElementById('rootFile'));
