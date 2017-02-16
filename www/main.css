@@ -1,0 +1,25 @@
+.welcome {
+  position:absolute;
+  top: 200;
+  left: 340;
+  height: 200;
+  width: 700;
+  background-color: darkolivegreen;
+  border: 2px solid greenyellow;
+  border-radius: 8px;
+}
+
+.welcomeText {
+  text-align: center;
+  font-family: Cambria;
+  font-size: 33px;
+  color: lightgoldenrodyellow;
+  text-shadow: black;
+  text-decoration
+}
+
+.box {
+  border: 2px solid black;
+  width: 30px;
+  height: 30px;
+}

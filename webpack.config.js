@@ -1,9 +1,10 @@
 module.exports = {
-  entry: './index.js',
+  entry: './main.js',
   output: {
     path: __dirname,
     filename: './www/bundle.js',
   },
+  devtool: 'inline-source-map',
   module: {
     loaders: [
       {
@@ -11,9 +12,9 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'react', 'stage-0']
-        }
-      }
-    ]
-  }
-}
+          presets: ['es2015', 'react', 'stage-0'],
+        },
+      },
+    ],
+  },
+};

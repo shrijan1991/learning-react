@@ -1,79 +1,84 @@
 import React, { Component } from 'react';
-import Players from './Players';
+import { createStore } from 'redux';
+import ReactDOM from 'react-dom';
 
-const boardMap = {
-  3:  {type: 'ladder', goto: 21},
-  7:  {type: 'ladder', goto: 35},
-  17: {type: 'ladder', goto: 32},
-  21: {type: 'ladder', goto: 72},
-  38: {type: 'ladder', goto:66},
-  46: {type: 'snake', goto: 28},
-  51: {type: 'snake', goto: 48},
-  55: {type: 'snake', goto: 6},
-  62: {type: 'ladder', goto: 82},
-  71: {type: 'snake', goto: 24},
-  73: {type: 'ladder', goto:83},
-  77: {type: 'snake', goto:67},
-  93: {type: 'snake', goto:59},
-  99: {type: 'snake', goto: 4},
-}
+
+const newGame = () => {
+  const arr = new Array(6);
+  for (let i = 0; i < 6; i += 1) {
+    arr[i] = new Array(5).fill(null);
+  }
+
+  return {
+    occupiedSpaces: arr,
+    currentPlayer: 0,
+  };
+};
+
+const clickedButton = (xcoor, ycoor) => {
+  return {
+    type: 'SELECT_SPACE',
+    dim: {
+      x: xcoor,
+      y: ycoor,
+    },
+  };
+};
+
+const startGame = () => {
+  return {
+    type: 'RESTART_GAME',
+  };
+};
+
+
+const occupySpace = (occupiedSpaces, x, y, currentPlayer) => {
+  return occupiedSpaces[x][y], currentPlayer, occupiedSpaces[x][y+1];
+};
+
+const reducer = (state = newGame(), action) => {
+  switch (action.type) {
+    case 'SELECT_SPACE':
+      return {
+        occupiedSpaces: occupySpace(state.occupiedSpaces, action.dim.x, action.dim.y, state.currentPlayer),
+        currentPlayer: (state.currentPlayer + 1) % 2,
+      };
+    case 'RESTART_GAME':
+      return newGame;
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
+
 
 class Board extends Component {
-
-  renderPlayer = (player, idx) => {
-  //   return <div key={idx} style={{background: player.color, width: 15, height: 15}} />;
-      return (<Players player={player} key = {idx} index= {idx}/>);
-
-  }
-
-  generateRow(columns, row) {
-    const players = this.props.players;
-    const currentPlayer = this.props.currentPlayer;
-    
-
-    const rows = columns;
-    const cells = [];
-    const rowNumber = (rows - row - 1);
-    const cellwidth = document.documentElement.clientWidth/12;
-    
-    for (let i = 0; i < columns; ++i) {
-      const cellNumber = rowNumber * columns + ((rowNumber % 2 === 0) ?  i + 1 : (columns - i));
-      
-
-      const cellPlayers = players.filter(player => player.number === cellNumber);
-
-      cells.push(
-        <div key={i} style={{display: 'inline-block', width: cellwidth, height: 70, border: '1px solid black', textAlign: 'center'}}>
-          {cellNumber}
-          {cellPlayers.map(this.renderPlayer)}
-        </div>
-        
-      );
-      
-
-    }
-    return cells;
-  }
-
-  generateRows(rows) {
-    const res = [];
-    
-    for (let i = 0; i < rows; ++i) {
-      res.push(<div key={i}>{this.generateRow(rows, i)}</div>);
-    }
-    return res;
-  }
-
   render() {
-    const size = this.props.size;
-    
-
-    return (  
+    console.log(store.getState().occupiedSpaces);
+    return (
       <div>
-        {this.generateRows(size)}
+        {store.getState().occupiedSpaces.map((row, index) => <Cells key={index} row={row} num={index}/>)}
       </div>
-    )
+    );
   }
 }
+
+//onClick={store.dispatch(clickedButton(index, 0))}
+
+const Cells = (props) => {
+  const some = props.num;
+  const cell = props.row.map((n, idx) => <div key={idx} className="box" style={{position:'absolute',left:idx*30,top:some*30}}></div>);
+  console.log(some);
+
+  return <div>{cell}</div>;
+};
+// onClick={() => props.onClick(idx)}
+
+const render = () => {
+  ReactDOM.render(<Board />, document.createElement("root"));
+};
+
+store.subscribe(render);
 
 export default Board;
