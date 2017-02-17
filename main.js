@@ -10,14 +10,14 @@ import ReactDOM from 'react-dom';
 
 class Main extends Component {
 
-  onClick() {
+  startGame() {
     ReactDOM.render(<Board call="newgame"/>, document.getElementById('root'));
   }
 
   render() {
     return (
       <div>
-        <WelcomeScreen start={() => this.onClick()} />
+        <WelcomeScreen message="Welcome to 4-of-a-kind!" start={() => this.startGame()} />
       </div>
     );
   }
