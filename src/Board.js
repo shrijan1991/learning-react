@@ -6,16 +6,12 @@ import WelcomeScreen from './Welcome';
 
 const newGame = () => {
   const arr = new Array(8);
-  for (let i = 0; i < 8; i += 1) {
+  for (let i = 0; i < 8; i++) {
     arr[i] = new Array(10).fill(null);
   }
-  const primarySpace = [];
-  primarySpace.push(arr);
-
   return {
-    occupiedSpaces: primarySpace,
+    occupiedSpaces: arr,
     currentPlayer: 0,
-    currentMove: 0,
   };
 };
 
@@ -62,27 +58,29 @@ const isVictor = (occupiedSpaces, x, y) => {
   });
 };
 
-const occupySpace = (occupiedSpaces, x, y, currentPlayer, currentMove) => {
-  const newOccSpaces = occupiedSpaces[currentMove].slice();
-  newOccSpaces[x][y] = currentPlayer;
-  occupiedSpaces.push(newOccSpaces);
-
-  return occupiedSpaces;
+const occupySpace = (occupiedSpaces, x, y, currentPlayer) => {
+  const newOccSpaces = occupiedSpaces.slice();
+  let emptyX = 0;
+  while (emptyX < 7 && newOccSpaces[emptyX][y] === null) {
+    emptyX++;
+  }
+  emptyX = newOccSpaces[emptyX][y] !== null ? emptyX - 1 : emptyX;
+  newOccSpaces[emptyX][y] = currentPlayer;
+  console.log(newOccSpaces);
+  return [newOccSpaces, emptyX];
 };
 
 const reducer = (state = newGame(), action) => {
   switch (action.type) {
     case 'SELECT_SPACE':
-      const newOccSpaces = occupySpace(state.occupiedSpaces, action.dim.x, action.dim.y, state.currentPlayer, state.currentMove);
-      return isVictor(newOccSpaces[state.currentMove], action.dim.x, action.dim.y) ? {
-        occupiedSpaces: newOccSpaces,
+      const newOccSpaces = occupySpace(state.occupiedSpaces, action.dim.x, action.dim.y, state.currentPlayer);
+      return isVictor(newOccSpaces[0], newOccSpaces[1], action.dim.y) ? {
+        occupiedSpaces: newOccSpaces[0],
         currentPlayer: (state.currentPlayer + 1) % 2,
-        currentMove: state.currentMove + 1,
         victor: state.currentPlayer,
       } : {
-        occupiedSpaces: newOccSpaces,
+        occupiedSpaces: newOccSpaces[0],
         currentPlayer: (state.currentPlayer + 1) % 2,
-        currentMove: state.currentMove + 1,
       };
     case 'RESTART_GAME':
       return newGame();
@@ -93,20 +91,21 @@ const reducer = (state = newGame(), action) => {
 
 const store = createStore(reducer);
 
-
 class Board extends Component {
   render() {
     const state = store.getState();
+    let playermsg;
     if (state.victor === 1 || state.victor === 0) {
-      const message = `Player ${state.victor + 1} is victorious.`;
-      return <WelcomeScreen message={message} start={() => store.dispatch(startGame())} />;
+      playermsg = `Player ${state.victor + 1} is victorious.`;
+      // return <WelcomeScreen message={message} start={() => store.dispatch(startGame())} />;
+    } else {
+      playermsg = `Player ${state.currentPlayer + 1}'s turn`;
     }
-    const playermsg = `Player ${state.currentPlayer + 1}'s turn`;
     console.log(state);
     return (
       <div>
         <div style={{ display: 'inline-block', width: '800px' }}>
-          {state.occupiedSpaces[state.currentMove].map((row, index) =>
+          {state.occupiedSpaces.map((row, index) =>
           <Cells key={index} row={row} num={index} onClick={(x, y) => store.dispatch(clickedButton(x, y))} />)}
         </div>
         <div style={{ display: 'inline-block', width: '40px', height: '640px' }}>
