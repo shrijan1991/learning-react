@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
 import Board from './src/Board';
 import WelcomeScreen from './src/Welcome';
-import ReactDOM from 'react-dom';
 
-
-
-
-
+import store from './src/configureStore';
 
 class Main extends Component {
-
-  startGame() {
-    ReactDOM.render(<Board call="newgame"/>, document.getElementById('root'));
-  }
+  state = {
+    started: false,
+  };
 
   render() {
+    const { started } = this.state;
+
     return (
-      <div>
-        <WelcomeScreen message="Welcome to 4-of-a-kind!" start={() => this.startGame()} />
-      </div>
+      <Provider store={store}>
+        <div>
+          {!started && <WelcomeScreen onStart={() => this.setState({ started: true })} /> }
+          {started && <Board />}
+        </div>
+      </Provider>
     );
   }
 }
